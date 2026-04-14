@@ -98,6 +98,86 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* XP, level, progress to Level 4 */}
+        <div className="mb-8 rounded-xl border border-border/50 bg-card/50 p-4 backdrop-blur-sm">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <svg
+                className="h-4 w-4 shrink-0 text-accent"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden
+              >
+                <path d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" />
+              </svg>
+              <span className="text-sm font-semibold tabular-nums text-white">
+                1,240 XP
+              </span>
+            </div>
+            <span className="rounded-full border border-accent/40 bg-accent/10 px-2.5 py-1 text-[11px] font-semibold text-accent">
+              Level 3 — Rising Closer
+            </span>
+          </div>
+          <div className="mb-1.5 flex items-center justify-between text-[10px] text-muted">
+            <span>Progress to Level 4</span>
+            <span className="tabular-nums text-muted/80">1,240 / 1,800 XP</span>
+          </div>
+          <div
+            className="h-2 w-full overflow-hidden rounded-full bg-white/[0.06]"
+            role="progressbar"
+            aria-valuenow={1240}
+            aria-valuemin={0}
+            aria-valuemax={1800}
+            aria-label="Experience progress toward level 4"
+          >
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-accent to-purple-400 shadow-[0_0_12px_-2px_rgba(167,139,250,0.6)]"
+              style={{ width: `${(1240 / 1800) * 100}%` }}
+            />
+          </div>
+          <p className="mt-1.5 text-[10px] text-muted/60">560 XP until Level 4</p>
+        </div>
+
+        {/* Daily challenge */}
+        <div className="mb-8 rounded-xl border border-orange-500/20 bg-gradient-to-br from-orange-500/[0.08] to-transparent p-4">
+          <div className="mb-3 flex items-start justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-orange-500/15 text-orange-400">
+                <svg
+                  className="h-5 w-5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden
+                >
+                  <path d="M12 2c-.8 2.1-2.5 3.4-4.2 4.9C5.5 8.9 4 10.6 4 13.5 4 17.1 7.6 20 12 20s8-2.9 8-6.5c0-2.9-1.5-4.6-3.8-6.4C14.5 5.6 12.8 4.1 12 2z" />
+                </svg>
+              </div>
+              <div>
+                <h2 className="text-xs font-semibold tracking-wider text-orange-200/90 uppercase">
+                  Daily Challenge
+                </h2>
+                <p className="mt-0.5 text-sm font-medium text-zinc-100">
+                  Complete 1 roleplay session today
+                </p>
+              </div>
+            </div>
+            <span className="shrink-0 rounded-full border border-accent/35 bg-accent/15 px-2 py-1 text-[10px] font-bold text-accent">
+              +150 XP
+            </span>
+          </div>
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-1 items-center gap-2">
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.08]">
+                <div className="h-full w-0 rounded-full bg-accent" />
+              </div>
+            </div>
+            <span className="text-xs font-semibold tabular-nums text-muted">
+              <span className="text-white">0</span>
+              <span className="text-muted/50">/1</span>
+            </span>
+          </div>
+        </div>
+
         <div className="mb-4 flex items-center gap-3">
           <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
           <span className="text-xs font-medium tracking-wider text-muted/70 uppercase">
