@@ -117,7 +117,7 @@ export default function DescribeJob() {
         <div className="mt-8 flex justify-center">
           <button
             disabled={description.trim().length === 0}
-            onClick={() => router.push("/session")}
+            onClick={() => router.push("/dashboard")}
             className={`relative inline-flex h-12 items-center justify-center gap-2 rounded-full px-8 text-sm font-semibold tracking-wide transition-all duration-300 ${
               description.trim().length > 0
                 ? "bg-accent text-white shadow-[0_0_32px_-4px_rgba(167,139,250,0.5)] hover:shadow-[0_0_48px_-4px_rgba(167,139,250,0.65)] hover:brightness-110"
