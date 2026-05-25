@@ -1,14 +1,18 @@
 @import "tailwindcss";
 
 @theme inline {
+  /* Copper Flame — field-sales energy, trustworthy dark UI */
   --color-background: #0a0a0a;
   --color-foreground: #fafafa;
-  --color-card: #141414;
-  --color-card-hover: #1f1f1f;
+  --color-card: #161616;
+  --color-card-hover: #1c1c1c;
   --color-border: #2a2a2a;
   --color-muted: #a1a1aa;
   --color-accent: #ff6b1a;
   --color-accent-soft: rgba(255, 107, 26, 0.12);
+  --color-streak: #f59e0b;
+  --color-streak-soft: rgba(245, 158, 11, 0.14);
+  --color-cream: #f5e6d3;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -28,4 +32,13 @@ body {
 ::selection {
   background: rgba(255, 107, 26, 0.35);
   color: #fff;
+}
+
+/* Subtle warm ambient glow for hero sections */
+.glow-copper {
+  background: radial-gradient(
+    ellipse 80% 50% at 50% -20%,
+    rgba(255, 107, 26, 0.12),
+    transparent
+  );
 }

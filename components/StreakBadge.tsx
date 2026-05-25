@@ -12,7 +12,7 @@ export function StreakBadge() {
   }, []);
 
   return (
-    <div className="inline-flex items-center gap-1 rounded-full border border-accent/30 bg-accent/10 px-3 py-1.5 text-sm font-bold text-accent">
+    <div className="inline-flex items-center gap-1 rounded-full border border-streak/35 bg-streak-soft px-3 py-1.5 text-sm font-bold text-streak">
       <span aria-hidden>🔥</span>
       <span>{streak}</span>
     </div>

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { AppBottomNav } from "@/components/AppBottomNav";
+import { DailyProgressCard } from "@/components/DailyProgressCard";
 import { StreakBadge } from "@/components/StreakBadge";
 import {
   buildProspectSessionHref,
@@ -30,10 +31,7 @@ export default function DashboardPage() {
         return;
       }
       setProfile(next);
-      scheduleDailyReminder(
-        next.notifications_enabled,
-        next.current_streak
-      );
+      scheduleDailyReminder(next.notifications_enabled, next.current_streak);
     });
   }, [router]);
 
@@ -47,6 +45,7 @@ export default function DashboardPage() {
 
   const prospects = filterProspects(profile.industry, profile.show_all_industries);
   const freeLeft = getFreeCallsRemaining(profile);
+  const canStart = freeLeft > 0 || profile.subscription_tier === "premium";
   const freeLabel =
     profile.subscription_tier === "premium"
       ? "Unlimited calls"
@@ -54,46 +53,50 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-dvh bg-background pb-28 text-white">
-      <main className="mx-auto max-w-md px-4 pt-6">
+      <div className="pointer-events-none fixed inset-x-0 top-0 h-56 glow-copper" />
+
+      <main className="relative mx-auto max-w-md px-4 pt-6">
         <header className="mb-6 flex items-center justify-between">
           <div>
             <p className="text-sm text-muted">Welcome back</p>
-            <h1 className="text-2xl font-black">{profile.name || "Rep"}</h1>
+            <h1 className="text-2xl font-black tracking-tight">
+              {profile.name || "Rep"}
+            </h1>
           </div>
           <StreakBadge />
         </header>
 
-        <section className="mb-6 rounded-2xl border border-accent/25 bg-accent/10 p-4">
-          <p className="text-sm font-bold text-accent">{freeLabel}</p>
-          <p className="mt-1 text-xs text-muted">
-            {profile.industry
-              ? `${industryLabel(profile.industry)} scenarios for you`
-              : "Personalized scenarios"}
-          </p>
-          <p className="mt-3 text-xs text-muted">
-            Daily goal: {profile.calls_completed_today}/{profile.daily_goal} calls
-          </p>
-        </section>
+        <div className="mb-6">
+          <DailyProgressCard
+            completed={profile.calls_completed_today}
+            goal={profile.daily_goal}
+            freeLabel={freeLabel}
+            industryLabel={
+              profile.industry
+                ? industryLabel(profile.industry)
+                : undefined
+            }
+          />
+        </div>
 
         <section className="mb-8">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xs font-black uppercase tracking-[0.22em] text-muted">
-              Train
+              Today&apos;s prospects
             </h2>
+            <Link href="/leaderboard" className="text-xs font-bold text-accent">
+              Your league →
+            </Link>
           </div>
           <div className="space-y-3">
-            {prospects.slice(0, 4).map((prospect) => (
-              <Link
-                key={prospect.id}
-                href={buildProspectSessionHref(prospect)}
-                className="block overflow-hidden rounded-2xl border border-border bg-card"
-              >
+            {prospects.slice(0, 4).map((prospect) => {
+              const card = (
                 <div
                   className={`relative h-40 bg-gradient-to-br ${prospect.imageClass} p-4`}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
                   <div className="relative">
-                    <span className="rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-black text-zinc-900">
+                    <span className="rounded-full bg-cream/95 px-2.5 py-1 text-[10px] font-black text-zinc-900">
                       {industryLabel(prospect.industry)}
                     </span>
                     <h3 className="mt-3 text-xl font-black">
@@ -105,16 +108,38 @@ export default function DashboardPage() {
                     </p>
                   </div>
                 </div>
-              </Link>
-            ))}
+              );
+
+              if (!canStart) {
+                return (
+                  <div
+                    key={prospect.id}
+                    className="block overflow-hidden rounded-2xl border border-border bg-card opacity-60"
+                  >
+                    {card}
+                  </div>
+                );
+              }
+
+              return (
+                <Link
+                  key={prospect.id}
+                  href={buildProspectSessionHref(prospect)}
+                  className="block overflow-hidden rounded-2xl border border-border bg-card transition hover:border-accent/30"
+                >
+                  {card}
+                </Link>
+              );
+            })}
           </div>
         </section>
 
-        {freeLeft === 0 && profile.subscription_tier === "free" && (
-          <section className="rounded-2xl border border-accent/30 bg-card p-5 text-center">
+        {!canStart && (
+          <section className="rounded-2xl border border-border bg-card p-5 text-center">
             <h2 className="text-lg font-black">Daily limit reached</h2>
             <p className="mt-2 text-sm text-muted">
-              Upgrade for unlimited calls, advanced scenarios, and leaderboard prizes.
+              You&apos;ve used all {FREE_CALLS_PER_DAY} free calls today. Upgrade
+              for unlimited practice and league prizes.
             </p>
             <button
               type="button"

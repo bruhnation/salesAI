@@ -432,7 +432,7 @@ function SessionContent() {
               disabled={!canSend}
               className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-all duration-200 ${
                 canSend
-                  ? "bg-accent text-white shadow-[0_0_20px_-4px_rgba(167,139,250,0.5)] hover:brightness-110"
+                  ? "bg-accent text-zinc-950 shadow-[0_0_20px_-4px_rgba(255,107,26,0.45)] hover:brightness-110"
                   : "cursor-not-allowed bg-zinc-800 text-zinc-500"
               }`}
             >
